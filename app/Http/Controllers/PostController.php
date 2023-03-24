@@ -42,7 +42,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return response()->json([
+            'post' => $post
+        ]);
     }
 
     /**
@@ -50,7 +52,18 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $post->title = $request->title;
+        $post->description = $request->description;
+
+        $post->save();
+
+        return response()->json([
+            'post' => [
+                'message' => 'post updated',
+                'status' => 'success',
+                'description' => $post,
+            ]
+        ]);
     }
 
     /**
@@ -58,6 +71,15 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return response()->json([
+            'post' => [
+                'message' => 'post deleted',
+                'status' => 'success',
+                'description' => $post,
+            ]
+        ]);
     }
+
 }
